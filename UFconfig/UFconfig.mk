@@ -33,7 +33,7 @@
 # C compiler and compiler flags:  These will normally not give you optimal
 # performance.  You should select the optimization parameters that are best
 # for your system.  On Linux, use "CFLAGS = -O3 -fexceptions" for example.
-CC = cc
+CC = gcc
 CFLAGS = -O3 -fexceptions
 
 # C++ compiler (also uses CFLAGS)
@@ -44,9 +44,15 @@ RANLIB = ranlib
 AR = ar cr
 
 # copy, delete, and rename a file
-CP = cp -f
-RM = rm -f
-MV = mv -f
+ifeq ($(OS),Windows_NT)
+	CP = cp -f
+	RM = del /Q
+	MV = mv -f
+else
+	CP = cp -f
+	RM = rm -f
+	MV = mv -f
+endif
 
 # Fortran compiler (not normally required)
 F77 = f77
@@ -383,4 +389,4 @@ RTLIB =
 # remove object files and profile output
 #------------------------------------------------------------------------------
 
-CLEAN = *.o *.obj *.ln *.bb *.bbg *.da *.tcov *.gcov gmon.out *.bak *.d *.gcda *.gcno
+CLEAN = *.o *.obj *.ln *.bb *.bbg *.da *.tcov *.gcov gmon.out *.bak *.d *.gcda *.gcno *.a
